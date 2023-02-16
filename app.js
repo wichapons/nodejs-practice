@@ -2,6 +2,8 @@ const express = require('express');
 const path = require('path');
 const fs = require('fs');
 const uuid = require('uuid')
+const storeShopData = require("./utility/restaurant-data-function");
+
 
 
 const app = express();
@@ -19,15 +21,12 @@ app.get('/restaurants',(req,res)=>{
     const shopDataPath = path.join(__dirname,'data','restaurants.json');
     const fileData = fs.readFileSync(shopDataPath);
     const storedShop = JSON.parse(fileData);
-
     res.render('restaurants',{numerOfShop:storedShop.length,restaurants:storedShop});
 });
 
 app.get('/restaurants/:id',(req,res)=>{
     const shopID = req.params.id;
-    const shopDataPath = path.join(__dirname,'data','restaurants.json');
-    const fileData = fs.readFileSync(shopDataPath);
-    const storedShop = JSON.parse(fileData);
+    const storedShop = storeShopData.getShopeData();
 
     for (const shop of storedShop){
         if(shop.id === shopID){
@@ -44,15 +43,20 @@ app.get('/recommend',(req,res)=>{
     });
 
 app.post('/recommend',(req,res)=>{
-    const shopName = req.body; //all input details after user submit the form as an object
-    shopName.id = uuid.v4();  // shopName.id // in javascipt if we access to the new property that's not in the object yet JS will create for you unlike the other programming lang
-    console.log(shopName);
-    const shopDataPath = path.join(__dirname,'data','restaurants.json');
+    const shopData = req.body; //all input details after user submit the form as an object
+    shopData.id = uuid.v4();  // shopName.id // in javascipt if we access to the new property that's not in the object yet JS will create for you unlike the other programming lang
+    console.log('hello world');
+    const   storedShop = storeShopData.getShopeData();
+            storedShop.push(shopData);
+            storeShopData.addShop(storedShop);
+            res.redirect('/confirm');
+        });
+    /*
+    const shopDataP ath = path.join(__dirname,'data','restaurants.json');
     const fileData = fs.readFileSync(shopDataPath);
     const storedShop = JSON.parse(fileData);
     storedShop.push(shopName);
-    fs.writeFileSync(shopDataPath,JSON.stringify(storedShop))
-    res.redirect('/confirm');
+    fs.writeFileSync(shopDataPath,JSON.stringify(storedShop));
 
     /*
     for (const shopList of storedShop){
@@ -62,9 +66,6 @@ app.post('/recommend',(req,res)=>{
     }
     res.send(shopList)
     */
-
-})
-
 app.get('/about',(req,res)=>{
     res.render('about');
     });
@@ -78,6 +79,7 @@ app.use((req,res)=>{  //for handling wrong link
 });
 
 app.use((error,req,res,next)=>{
+    console.log(error);
     res.status(500)
     res.render('500');
 })
