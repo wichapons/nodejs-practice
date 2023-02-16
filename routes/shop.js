@@ -23,7 +23,6 @@ router.get('/restaurants',(req,res)=>{
             return -1;
         }
     });
-
     
     res.render('restaurants',{numerOfShop:storedShop.length,
         restaurants:storedShop,
@@ -68,5 +67,4 @@ router.post('/recommend',(req,res)=>{
     }
     res.send(shopList)
     */
-
 module.exports = router;
