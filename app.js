@@ -35,6 +35,7 @@ app.get('/restaurants/:id',(req,res)=>{
         }else{
         }}
         console.log("check shop.id");
+        res.status(404);
         return res.render('404');
 });
 
@@ -71,6 +72,14 @@ app.get('/confirm',(req,res)=>{
     res.render('confirm');
     });
 
+app.use((req,res)=>{  //for handling wrong link
+    res.status(404);
+    res.render('404')
+});
 
+app.use((error,req,res,next)=>{
+    res.status(500)
+    res.render('500');
+})
 
 app.listen(3000);
