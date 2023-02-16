@@ -24,6 +24,12 @@
       <% } else {%>
         <p>Find your next favorite restaurants with help of our other users!</p>
         <p>We found <%= numerOfShop%> restaurants.</p>
+
+        <form action="/restaurants" method="GET">
+          <button onclick="">change order</button>
+          <input type="hidden" value="<%=nextOrder %>" name="order">
+      </form>
+
         <ul id="restaurants-list">
           <% for (const restaurant of restaurants) { %>
             <%- include('includes/restaurant-item.ejs',{restaurant:restaurant}) %>

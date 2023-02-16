@@ -6,8 +6,28 @@ const storeShopData = require("../utility/restaurant-data-function");
 const router = express.Router();
 
 router.get('/restaurants',(req,res)=>{
+    let shopOrder = req.query.order;
+    let nextOrder ='descending'
+    if (shopOrder !== 'ascending'&& shopOrder !== 'descending'){
+        shopOrder === 'ascending';
+    };
+    if (shopOrder==='descending'){
+        nextOrder = 'ascending';
+    };
+
     const storedShop = storeShopData.getShopeData();
-    res.render('restaurants',{numerOfShop:storedShop.length,restaurants:storedShop});
+    storedShop.sort((shopA,shopB)=>{
+        if((shopOrder ==='ascending' && shopA.name>shopB.name)){
+            return 1;
+        } else if (shopA.name<shopB.name && shopOrder === 'descending') {
+            return -1;
+        }
+    });
+
+    
+    res.render('restaurants',{numerOfShop:storedShop.length,
+        restaurants:storedShop,
+        nextOrder:nextOrder});
 });
 
 router.get('/restaurants/:id',(req,res)=>{
