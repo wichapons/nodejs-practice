@@ -31,10 +31,11 @@ app.get('/restaurants/:id',(req,res)=>{
 
     for (const shop of storedShop){
         if(shop.id === shopID){
-           return res.render('restaurants-details',{id:shop.name}); //use return for tell program to stop looping for more cuz we already found the result
+           return res.render('restaurants-details',{restaurant:shop}); //use return for tell program to stop looping for more cuz we already found the result
         }else{
-            console.log("check shop.id");
-        }} 
+        }}
+        console.log("check shop.id");
+        return res.render('404');
 });
 
 app.get('/recommend',(req,res)=>{

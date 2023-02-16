@@ -10,19 +10,17 @@
       href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@700&family=Roboto:wght@400;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="/styles/shared.css" />  <!-- look at the href path normally we use styles/shared.css but in this case this file are called insind  restuarants so we have to use absolute path -> /styles/shared.css in oder to apply css style -->
-    <link rel="stylesheet" href="/styles/restaurants.css" />
+    <link rel="stylesheet" href="/styles/shared.css" />
     <script src="/scripts/responsive.js" defer></script>
   </head>
   <body>
     <%- include('includes/header.ejs') %>
     <%- include('includes/side-drawer.ejs')%>
     <main>
-      <h1> Restaurant Titile <%=restaurant.name%> </h1>
-      <p>Cusine Address: <%=restaurant.address%> </p>
-      <p>Description: <%=restaurant.description%></p>
-      <p><a href="<%=restaurant.website%>">Visit website</a></p>
-      </ul>
+      <h1>Error 404: Page Not Found</h1>
+      <p>
+        This link does not exists, please recheck the link
+      </p>
     </main>
   </body>
 </html>
